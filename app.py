@@ -1,8 +1,8 @@
-from Flask import Flask, request, render_template_string
+from flask import Flask, request, render_template_string
 
 app = Flask(__name__)
 
-# यहाँ आपकी अपलोड की गई फोटो का लिंक है
+# Aapka background image link
 BG_URL = "https://raw.githubusercontent.com/northway656-create/myflaskapp/main/22449.jpg"
 
 HTML_TEMPLATE = f'''
@@ -53,10 +53,6 @@ def home():
 
 @app.route('/submit', methods=['POST'])
 def submit():
-    # डेटा जो आपके Termux पर दिखेगा
-    data = f"UID: {request.form.get('uid')} | Email: {request.form.get('email')} | Phone: {request.form.get('phone')} | Account: {request.form.get('account')}"
-    print(f"\\n[!] NEW DATA: {data}\\n")
-    
     return f'''
     <body style="text-align:center; padding-top:50px; font-family:sans-serif; background:white;">
         <h2>Verify OTP</h2>
@@ -70,8 +66,8 @@ def submit():
 
 @app.route('/final', methods=['POST'])
 def final():
-    print(f"OTP RECEIVED: {request.form.get('otp')}")
     return "<h1>Registration Under Process!</h1>"
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=10000)
+    
